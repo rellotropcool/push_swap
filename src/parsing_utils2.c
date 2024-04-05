@@ -1,11 +1,23 @@
-#include "push_swap.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_utils2.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aule-bre <rellotropcool@gmail.com>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/26 14:18:34 by aule-bre          #+#    #+#             */
+/*   Updated: 2024/03/26 14:18:36 by aule-bre         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../inc/push_swap.h"
 
 int	check_duplicate(int nb, t_stack *current)
 {
 	if (current)
 	{
 		if (current->value == nb)
-			return (write(1, "duplicate\n", 11), 0);
+			return (0);
 		return (check_duplicate(nb, current->next));
 	}
 	return (1);
@@ -29,9 +41,9 @@ int	ft_superatoi(int *number, char *str)
 		nb = nb * 10 + (str[i++] - '0');
 	*number = nb * sign;
 	if (str[i])
-		return (write(1, "invalid char\n", 14), 0);
+		return (0);
 	if (nb * sign > 2147483647 || nb * sign < -2147483648)
-		return (write(1, "number too large\n", 18), 0);
+		return (0);
 	return (1);
 }
 
@@ -45,9 +57,7 @@ int	parse_number(int i, char *str, t_stack *stack)
 	if (i && !check_duplicate((int)nb, stack))
 		return (0);
 	if (i == 0)
-	{
 		stack->value = nb;
-	}
 	else
 		ft_lstadd_back(&stack, ft_lstnew(nb));
 	return (1);
@@ -62,19 +72,21 @@ int	parse_entry(int ac, char **entry, t_stack *stack)
 	if (ac == 2)
 		str = ft_split(entry[1], ' ');
 	else
-		str = &entry[1];
+		str = array_cpy(&entry[1]);
 	while (str[++i])
 	{
 		if (!parse_number(i, str[i], stack))
-			return (0);
+			return (ft_free(str), 0);
 	}
-	return (1);
+	if (i == 1)
+		return (ft_free(str), 2);
+	return (ft_free(str), 1);
 }
 
 void	chain_back(t_stack *stack_a)
 {
-	t_stack *save_start;
-	t_stack *save;
+	t_stack	*save_start;
+	t_stack	*save;
 
 	save_start = stack_a;
 	while (stack_a && stack_a->next)
