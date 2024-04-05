@@ -43,6 +43,8 @@ char	**array_cpy(char **str)
 	while (str[i])
 		i++;
 	exit = malloc((i + 1) * sizeof(char *));
+	if (!exit)
+		return (NULL);
 	i = 0;
 	while (str[i])
 	{
