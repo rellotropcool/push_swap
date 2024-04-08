@@ -51,13 +51,12 @@ int	turk_pa2(t_stack **a, t_stack **b)
 	{
 		while ((*a)->value < (*b)->value)
 		{
-			ra(a);
 			if ((*a)->value < (*a)->prev->value)
 				break ;
+			ra(a);
 		}
 		pa(a, b);
-		while ((*a)->value > ((*a)->prev)->value)
-			rra(a);
+		reset_a(a);
 	}
 	return (1);
 }

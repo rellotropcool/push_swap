@@ -70,6 +70,7 @@ t_double			cheapest_number(t_stack *a, t_stack *b, t_double be,
 						t_stack *start);
 void				tiny_sort(t_stack **a);
 void				reset(t_stack **b);
+void				reset_a(t_stack **a);
 void				free_node(t_stack *a);
 char				**array_cpy(char **str);
 int					check_sorted(t_stack *a);
